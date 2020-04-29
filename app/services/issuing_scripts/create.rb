@@ -3,7 +3,7 @@ module IssuingScripts
     class << self
       def call
         ActiveRecord::Base.transaction do
-          Messages::Create.call
+          Messages::Automatic.new.call
           Payments::PaymentProviderFactory::Create.call
           Payments::Create.call
         end
