@@ -2,7 +2,9 @@ module Messages
   class Create
     class << self
       def call
-        create_message
+        if create_message
+          Inboxes::UpdateUnread.call(inbox)
+        end
       end
 
       private
