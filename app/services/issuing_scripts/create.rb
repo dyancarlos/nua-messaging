@@ -2,9 +2,11 @@ module IssuingScripts
   class Create
     class << self
       def call
-        # send a message to admin
-        # call PaymentProviderFactory.provider.debit_card(patient_user)
-        # create a payment record
+        ActiveRecord::Base.transaction do
+          Messages::Create.call
+          Payments::PaymentProviderFactory::Create.call
+          Payments::Create.call
+        end
       end
     end
   end
